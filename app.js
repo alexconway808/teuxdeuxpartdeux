@@ -42,27 +42,30 @@ app.get('/tasks', function (req, res) {
   });
 });
 
+
 //GET /tasks/new - NEW form
 app.get('/tasks/new', function (req, res){
   res.render('Tasks/New.jade');
   console.log("Hello World");
 });
 
-// //Post /tasks - CREATE a redirect
-// app.post("/tasks", function (req, res) {
-//   // console.log("Receive task post?")
-//   var task = new TaskItem ({
-//     title: req.param ('title'),   // This is in the express api req param name
-//     notes: req.param ('notes') 
 
-//   task.save(function (wert, task) {
-//     if(wert){res.send(500, wert);}
+//POST /tasks - CREATE a redirect
+app.post("/tasks", function (req, res) {
+  // console.log("Receive task post?")
+  var newTask = new Task({
+    title: req.param ('title'),   // This is in the express api req param name
+    notes: req.param ('notes') 
+  })
 
-//     res.redirect("/");
+  newTask.save(function (wert, task) {
+    if(wert){res.send(500, wert);}
+
+    res.redirect("/tasks");
   
-//   });
+  });
 
-// });
+});
 
 
 // //GET /tasks/:id - SHOW with Jade template
