@@ -40,7 +40,7 @@ app.get("/", function (req, res) {
 app.post("/tasks", function (req, res) {
   // console.log("Receive task post?")
   var task = new TaskItem ({
-    title: req.param (‘title’),   ← This is in the express api req param name
+    title: req.param (‘title’),   // This is in the express api req param name
     notes: req.param (‘notes’) 
 
   task.save(function (wert, task) {
@@ -58,6 +58,12 @@ app.post("/tasks", function (req, res) {
 //GET /tasks/:id/edit - EDIT with a form
 
 //PUT /tasks/:id - UPDATE with a redirect
+app.put ("/tasks/:id", function (req, res) {
+  var id = req.param(‘id’);  NOTE: This is just an example don’t just copy, find the ID in Mongolab and copy and paste it in
+
+  TaskItem.findOne({_id: id}, fucntion () {
+
+
 
 //DEL /tasks/:id - DESTROY with a redirect
 
