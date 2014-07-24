@@ -16,7 +16,8 @@ var Schema = mongoose.Schema;
 
 //Define the Task schema
 var taskSchema = new Schema({
-  task_data: String
+  title: String,
+  notes: String
 });
 
 //Define the Task model
@@ -27,10 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-//Is express running?
-
-//Is jade running?
 
 
 // CRUD task items
@@ -45,6 +42,11 @@ app.get('/tasks', function (req, res) {
   });
 });
 
+//GET /tasks/new - NEW form
+app.get('/tasks/new', function (req, res){
+  res.render('Tasks/New.jade');
+  console.log("Hello World");
+});
 
 // //Post /tasks - CREATE a redirect
 // app.post("/tasks", function (req, res) {
@@ -77,7 +79,7 @@ app.get('/tasks', function (req, res) {
 
 // //DEL /tasks/:id - DESTROY with a redirect
 
-// //GET /tasks/new - NEW form
+
 
 
 app.listen(1337, function () {
