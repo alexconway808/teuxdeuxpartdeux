@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
 // GET /tasks - LIST works with Jade templates
 app.get('/tasks', function (req, res) {
   Task.find(function (err, tasks){
-    console.log(tasks);
+    //console.log(tasks);
     res.render('Tasks/List.jade',{tasks: tasks});
   });
 });
@@ -52,7 +52,6 @@ app.get('/tasks/new', function (req, res){
 
 //POST /tasks - CREATE a redirect
 app.post("/tasks", function (req, res) {
-  // console.log("Receive task post?")
   var newTask = new Task({
     title: req.param ('title'),   // This is in the express api req param name
     notes: req.param ('notes') 
@@ -68,7 +67,15 @@ app.post("/tasks", function (req, res) {
 });
 
 
-// //GET /tasks/:id - SHOW with Jade template
+//GET /tasks/:id - SHOW with Jade template
+app.get("/tasks/:id", function (req, res){
+  var id = req.param('id');
+  // console.log(id);
+  Task.findOne({_id: id}, function (err, task) {
+    res.send(task);
+  });
+});
+
 
 // //GET /tasks/:id/edit - EDIT with a form
 

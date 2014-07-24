@@ -1,0 +1,11 @@
+extends ../Layout 
+
+block content
+  h1 Testing The Path
+  ul
+    each task in tasks
+      li
+        a(href="/tasks/#{task._id}")
+          span.title=task.title
+          br
+          span.notes=task.notes
