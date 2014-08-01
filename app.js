@@ -67,28 +67,50 @@ app.post("/tasks", function (req, res) {
 });
 
 
-//GET /tasks/:id - SHOW with Jade template
+// GET /tasks/:id - SHOW with Jade template
 app.get("/tasks/:id", function (req, res){
-  var id = req.param('id');
+  var id = req.params.id;
   // console.log(id);
   Task.findOne({_id: id}, function (err, task) {
-    res.send(task);
+    var options = {};
+    options.currentTask = task;
+    res.render("Tasks/Show.jade", options);
   });
 });
 
 
-// //GET /tasks/:id/edit - EDIT with a form
+// GET /tasks/:id/edit - EDIT with a form
+app.get("/tasks/:id/edit", function (req, res){
+  Task.findOne(req.params.id, function (err, task){
+    var options = {};
+    options.currentTask = task;
+    res.render("Tasks/Edit.jade", options);
+  });
+});
 
-// //PUT /tasks/:id - UPDATE with a redirect, when there is a post it saves a PUT on UPDATE
-// app.put ("/tasks/:id", function (req, res) {
-//   var id = req.param(‘id’);  NOTE: This is just an example don’t just copy, find the ID in Mongolab and copy and paste it in
 
-//   TaskItem.findOne({_id: id}, fucntion () {
+// PUT /tasks/:id - UPDATE with a redirect, when there is a post it saves a PUT on UPDATE
+app.put ("/tasks/:id", function (req, res) {
+  var id = req.params.id;  
+  TaskItem.findOne(
+    {_id: id}, 
+    {
+      title: req.param('title'),
+      title: req.param('notes')
+    },
+    function (err, task) {
+      res.redirect('/tasks');
+    }  
+  )
+});  
 
 
-
-// //DEL /tasks/:id - DESTROY with a redirect
-
+// DEL /tasks/:id - DESTROY with a redirect
+app.delete ("/tasks/:id", function (req, res) {
+  Task.findOne(req.params.id, function (err, task) {
+    res.redirect("/tasks")
+  });
+});
 
 
 
