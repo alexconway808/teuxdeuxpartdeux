@@ -1,0 +1,11 @@
+extends ../Layout
+
+block content
+  H1 Here is yo task
+    p= currentTask.title
+    br
+    p= currentTask.notes
+    br
+    a(href="/Tasks/#{currentTask._id}/Edit")
+      button(type = "Submit") Edit Task
+

@@ -4,7 +4,7 @@ var jade = require ('jade');
 var express = require ('express');
 var app = express();
 var bodyParser = require ('body-parser');
-var methodoverride = require ('method-override');
+var methodOverride = require ('method-override');
 
 mongoose.connect('mongodb://user1:1234@ds037607.mongolab.com:37607/teuxdeuxpartdeux');
 
@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(methodOverride('_method'));
 
 
 // CRUD task items
@@ -92,11 +93,11 @@ app.get("/tasks/:id/edit", function (req, res){
 // PUT /tasks/:id - UPDATE with a redirect, when there is a post it saves a PUT on UPDATE
 app.put ("/tasks/:id", function (req, res) {
   var id = req.params.id;  
-  TaskItem.findOne(
+  Task.findOneAndUpdate(
     {_id: id}, 
     {
-      title: req.param('title'),
-      title: req.param('notes')
+      title: req.param('taskTitle'),
+      notes: req.param('taskNotes')
     },
     function (err, task) {
       res.redirect('/tasks');
