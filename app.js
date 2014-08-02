@@ -108,7 +108,7 @@ app.put ("/tasks/:id", function (req, res) {
 
 // DEL /tasks/:id - DESTROY with a redirect
 app.delete ("/tasks/:id", function (req, res) {
-  Task.findOne(req.params.id, function (err, task) {
+  Task.findByIdAndRemove(req.params.id, function (err, task) {
     res.redirect("/tasks")
   });
 });

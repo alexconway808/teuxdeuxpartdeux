@@ -1,7 +1,7 @@
 extends ../Layout 
 
 block content
-  h1 Testing The Path
+  h1 Here are the tasks
   ul
     each task in tasks
       li
@@ -9,3 +9,5 @@ block content
           span.title=task.title
           br
           span.notes=task.notes
+        form#deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
+          button#delete(type="submit") delete
