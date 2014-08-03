@@ -17,6 +17,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride('_method'));
 
+//Create fake username and password for testing
+var fakeusername = "Alex";
+var fakepassword = "Alex";
+
 //Create the Task schema
 var Schema = mongoose.Schema;
 
@@ -48,10 +52,24 @@ app.post('/login', function (req, res) {
   if (req.param ('password') === undefined || req.param ('password') === ''){
     errors += 'Missing Password';
   }
-  res.render('Users/Login.jade', { errors : errors } );
-});
+
+//Authenticate
+if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
+  //User is authenticated and directed to Tasks
+  res.redirect('/tasks');
+  return;
+}
+else {
+  errors += 'Incorrect Username or Password'
+}
 
 //Create locals, objects of key value pairs available in template
+  res.render('Users/Login.jade', { errors : errors } );
+
+});
+
+
+
 
 // CRUD task items
 
