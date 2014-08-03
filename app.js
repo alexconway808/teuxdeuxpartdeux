@@ -5,6 +5,7 @@ var express = require ('express');
 var app = express();
 var bodyParser = require ('body-parser');
 var methodOverride = require ('method-override');
+var session = require ('express-session');
 
 mongoose.connect('mongodb://user1:1234@ds037607.mongolab.com:37607/teuxdeuxpartdeux');
 
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(methodOverride('_method'));
+app.use(session({ secret : 'sauce' }));
 
 //Create fake username and password for testing
 var fakeusername = "Alex";
@@ -56,10 +58,16 @@ app.post('/login', function (req, res) {
 //Authenticate
 if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
   //User is authenticated and directed to Tasks
+  var user = {
+    id: 1,
+    username : fakeusername,
+    username : fakepassword
+  };
+
+  req.session.user = user;  //store in the session
   res.redirect('/tasks');
   return;
-}
-else {
+}else {
   errors += 'Incorrect Username or Password'
 }
 
@@ -68,7 +76,11 @@ else {
 
 });
 
-
+//Store sessions with the server so you don't have to keep logging in
+//Sessions can hold any amount of data, such as last visit
+//We want to store User by setting it to something to retrieve user id
+//When you log out you kill the session
+//If the user is not looged in they can not get to tasks
 
 
 // CRUD task items
@@ -77,10 +89,15 @@ else {
 
 // GET /tasks - LIST works with Jade templates
 app.get('/tasks', function (req, res) {
-  Task.find(function (err, tasks){
-    //console.log(tasks);
-    res.render('Tasks/List.jade',{tasks: tasks});
-  });
+  
+  if(req.session.user !== undefined) {
+    Task.find(function (err, tasks){
+      //console.log(tasks);
+      res.render('Tasks/List.jade',{tasks: tasks});
+    });
+  }else{ //not logged in
+    res.redirect('/login');
+}
 });
 
 
