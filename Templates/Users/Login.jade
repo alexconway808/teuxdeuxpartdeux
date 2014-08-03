@@ -1,0 +1,13 @@
+extends ../Layout
+
+block content
+  H1 What do you have TeuxDeux?
+  form(action="Login", method="POST", enctype="application/x-www-form-urlencoded")
+    p
+      label(for="Username") Username
+      input#username( value="", type="text", name="username")
+    p
+      label(for="Password") Password
+      input#password( value="", type="text", name="password")
+    
+    button(type="submit") Login

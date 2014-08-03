@@ -10,6 +10,12 @@ mongoose.connect('mongodb://user1:1234@ds037607.mongolab.com:37607/teuxdeuxpartd
 
 //This is from the express api documentation
 app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/Templates');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(methodOverride('_method'));
 
 //Create the Task schema
 var Schema = mongoose.Schema;
@@ -23,12 +29,20 @@ var taskSchema = new Schema({
 //Define the Task model
 var Task = mongoose.model('Task', taskSchema);
 
-app.set('views', __dirname + '/Templates');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(methodOverride('_method'));
+
+
+//Authentication
+
+//Render the login.jade page
+app.get('/login', function (req, res) {
+  res.render('Users/Login.jade');
+});
+
+
+//Add the username and password fields
+app.post('/login', function (req, res) {
+  res.render('Users/Login.jade')
+});
 
 
 // CRUD task items
@@ -119,22 +133,4 @@ app.listen(1337, function () {
   console.log('%s listening at %s', app.name, app.url);
 });
 
-
-
-
-
-
-
-
-
-//Need this?
-// var server = restify.createServer({
-//   name: 'app',
-//   version: '0.0.0'
-
-// });
-
-// server.use(restify.acceptParser(server.acceptable));
-// server.use(restify.queryParser());
-// server.use(restify.bodyParser());
 
