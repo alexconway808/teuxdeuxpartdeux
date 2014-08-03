@@ -41,9 +41,17 @@ app.get('/login', function (req, res) {
 
 //Add the username and password fields
 app.post('/login', function (req, res) {
-  res.render('Users/Login.jade')
+  var errors = '';
+  if (req.param ('username') === undefined || req.param ('username') === ''){
+    errors += 'Missing Username';
+  }
+  if (req.param ('password') === undefined || req.param ('password') === ''){
+    errors += 'Missing Password';
+  }
+  res.render('Users/Login.jade', { errors : errors } );
 });
 
+//Create locals, objects of key value pairs available in template
 
 // CRUD task items
 
