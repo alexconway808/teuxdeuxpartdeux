@@ -1,5 +1,5 @@
 
-
+var mongoose = require ('./mongoose');
 var jade = require ('jade');
 var express = require ('express');
 var app = express();
@@ -9,7 +9,6 @@ var session = require ('express-session');
 
 var tasks = require('./routes/tasks');
 
-mongoose.connect('mongodb://user1:1234@ds037607.mongolab.com:37607/teuxdeuxpartdeux');
 
 //This is from the express api documentation
 app.use(express.static(__dirname + '/public'));
@@ -47,24 +46,24 @@ app.post('/login', function (req, res) {
     errors += 'Missing Password';
   }
 
-//Authenticate
-if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
-  //User is authenticated and directed to Tasks
-  var user = {
-    id: 1,
-    username : fakeusername,
-    username : fakepassword
-  };
+  //Authenticate
+  if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
+    //User is authenticated and directed to Tasks
+    var user = {
+      id: 1,
+      username : fakeusername,
+      password : fakepassword
+    };
 
-  req.session.user = user;  //store in the session
-  res.redirect('/tasks');
-  return;
-}else {
-  errors += 'Incorrect Username or Password'
-}
+    req.session.user = user;  //store in the session
+    res.redirect('/tasks');
+    return;
+  }else {
+    errors += 'Incorrect Username or Password'
+  }
 
-//Create locals, objects of key value pairs available in template
-  res.render('Users/Login.jade', { errors : errors } );
+  //Create locals, objects of key value pairs available in template
+    res.render('Users/Login.jade', { errors : errors } );
 
 });
 

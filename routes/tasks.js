@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require ('mongoose');
+var mongoose = require ('../mongoose');
 
 //Create the Task schema
 var Schema = mongoose.Schema;
@@ -14,18 +14,21 @@ var taskSchema = new Schema({
 //Define the Task model
 var Task = mongoose.model('Task', taskSchema);
 
+router.use('/tasks', function(req, res, next){
+  if(req.session.user !== undefined) {
+    next();
+  }else{ //not logged in
+    res.redirect('/login');
+  }
+});
 
 // GET /tasks - LIST works with Jade templates
 router.get('/tasks', function (req, res) {
   
-  if(req.session.user !== undefined) {
     Task.find(function (err, tasks){
       //console.log(tasks);
       res.render('Tasks/List.jade',{tasks: tasks});
     });
-  }else{ //not logged in
-    res.redirect('/login');
-}
 });
 
 
