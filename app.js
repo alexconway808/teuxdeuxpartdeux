@@ -1,11 +1,13 @@
 
-var mongoose = require ('mongoose');
+
 var jade = require ('jade');
 var express = require ('express');
 var app = express();
 var bodyParser = require ('body-parser');
 var methodOverride = require ('method-override');
 var session = require ('express-session');
+
+var tasks = require('./routes/tasks');
 
 mongoose.connect('mongodb://user1:1234@ds037607.mongolab.com:37607/teuxdeuxpartdeux');
 
@@ -19,21 +21,11 @@ app.use(bodyParser.urlencoded({
 app.use(methodOverride('_method'));
 app.use(session({ secret : 'sauce' }));
 
+app.use('/', tasks);
+
 //Create fake username and password for testing
 var fakeusername = "Alex";
 var fakepassword = "Alex";
-
-//Create the Task schema
-var Schema = mongoose.Schema;
-
-//Define the Task schema
-var taskSchema = new Schema({
-  title: String,
-  notes: String
-});
-
-//Define the Task model
-var Task = mongoose.model('Task', taskSchema);
 
 
 
@@ -76,6 +68,11 @@ if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
 
 });
 
+app.get('/logout', function (req, res){
+  req.session.user = undefined;
+  res.redirect('/login');
+});
+
 //Store sessions with the server so you don't have to keep logging in
 //Sessions can hold any amount of data, such as last visit
 //We want to store User by setting it to something to retrieve user id
@@ -87,88 +84,7 @@ if(req.param ('username') === "Alex" && req.param ('password') === "Alex"){
 
 // INDEX
 
-// GET /tasks - LIST works with Jade templates
-app.get('/tasks', function (req, res) {
-  
-  if(req.session.user !== undefined) {
-    Task.find(function (err, tasks){
-      //console.log(tasks);
-      res.render('Tasks/List.jade',{tasks: tasks});
-    });
-  }else{ //not logged in
-    res.redirect('/login');
-}
-});
 
-
-//GET /tasks/new - NEW form
-app.get('/tasks/new', function (req, res){
-  res.render('Tasks/New.jade');
-  console.log("Hello World");
-});
-
-
-//POST /tasks - CREATE a redirect
-app.post("/tasks", function (req, res) {
-  var newTask = new Task({
-    title: req.param ('title'),   // This is in the express api req param name
-    notes: req.param ('notes') 
-  })
-
-  newTask.save(function (wert, task) {
-    if(wert){res.send(500, wert);}
-
-    res.redirect("/tasks");
-  
-  });
-
-});
-
-
-// GET /tasks/:id - SHOW with Jade template
-app.get("/tasks/:id", function (req, res){
-  var id = req.params.id;
-  // console.log(id);
-  Task.findOne({_id: id}, function (err, task) {
-    var options = {};
-    options.currentTask = task;
-    res.render("Tasks/Show.jade", options);
-  });
-});
-
-
-// GET /tasks/:id/edit - EDIT with a form
-app.get("/tasks/:id/edit", function (req, res){
-  Task.findOne(req.params.id, function (err, task){
-    var options = {};
-    options.currentTask = task;
-    res.render("Tasks/Edit.jade", options);
-  });
-});
-
-
-// PUT /tasks/:id - UPDATE with a redirect, when there is a post it saves a PUT on UPDATE
-app.put ("/tasks/:id", function (req, res) {
-  var id = req.params.id;  
-  Task.findOneAndUpdate(
-    {_id: id}, 
-    {
-      title: req.param('taskTitle'),
-      notes: req.param('taskNotes')
-    },
-    function (err, task) {
-      res.redirect('/tasks');
-    }  
-  )
-});  
-
-
-// DEL /tasks/:id - DESTROY with a redirect
-app.delete ("/tasks/:id", function (req, res) {
-  Task.findByIdAndRemove(req.params.id, function (err, task) {
-    res.redirect("/tasks")
-  });
-});
 
 
 
