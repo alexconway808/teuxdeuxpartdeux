@@ -1,13 +1,24 @@
 extends ../Layout 
 
 block content
-  h1 Here are the tasks
-  ul
-    each task in tasks
-      li
-        a(href="/tasks/#{task._id}")
-          span.title=task.title
-          br
-          span.notes=task.notes
-        form#deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
-          button#delete(type="submit") delete
+  h1 Teux Deux App
+    h2 Add a new Task
+    form#form(action='/tasks', method='POST', enctype='application/x-www-form-urlencoded')
+      p
+        label.input(for='title_input') Title
+        input#title_input( type='text', name='title')
+      p
+        label.input(for='notes_input') Notes
+        input#notes( type='text', name='notes')
+      p
+        button(type="submit") Add Task
+    h2 Your Tasks
+    ul#taskcontainer
+      each task in tasks
+        li
+          a(href="/tasks/#{task._id}")
+            span.title=task.title
+            br
+            span.notes=task.notes
+          form#deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
+            button#delete(type="submit") delete

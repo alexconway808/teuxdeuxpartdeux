@@ -35,7 +35,7 @@ router.get('/tasks', function (req, res) {
 //GET /tasks/new - NEW form
 router.get('/tasks/new', function (req, res){
   res.render('Tasks/New.jade');
-  console.log("Hello World");
+  //console.log("Hello World");
 });
 
 
@@ -49,7 +49,7 @@ router.post("/tasks", function (req, res) {
   newTask.save(function (wert, task) {
     if(wert){res.send(500, wert);}
 
-    res.redirect("/tasks");
+    res.json(newTask);
   
   });
 
