@@ -8,7 +8,8 @@ var Schema = mongoose.Schema;
 //Define the Task schema
 var taskSchema = new Schema({
   title: String,
-  notes: String
+  notes: String,
+  created: Date
 });
 
 //Define the Task model
@@ -24,9 +25,11 @@ router.use('/tasks', function(req, res, next){
 
 // GET /tasks - LIST works with Jade templates
 router.get('/tasks', function (req, res) {
-  
-    Task.find(function (err, tasks){
-      //console.log(tasks);
+    
+    Task.find()
+      .sort('-created')
+      .exec(function (err, tasks){  
+
       res.render('Tasks/List.jade',{tasks: tasks});
     });
 });
@@ -43,8 +46,9 @@ router.get('/tasks/new', function (req, res){
 router.post("/tasks", function (req, res) {
   var newTask = new Task({
     title: req.param ('title'),   // This is in the express api req param name
-    notes: req.param ('notes') 
-  })
+    notes: req.param ('notes'),
+    created: Date.now () 
+  });
 
   newTask.save(function (wert, task) {
     if(wert){res.send(500, wert);}

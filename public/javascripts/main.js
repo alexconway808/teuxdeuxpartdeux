@@ -22,12 +22,18 @@ function addNewTask(newTask){
   var container = $('<li>');
   var taskForm = $('<form>');
   var deleteButton = $('<input type="submit>", value="Delete">');
-  var title = $('<span>').html(newTask.title);
-  var notes = $('<span>').html(newTask.notes);
+  var title = $('<a>', {
+    href: "/tasks/" + newTask._id,
+    text: newTask.title
+  });
+  var notes = $('<a>', {
+    href: "/tasks/" + newTask._id,
+    text: newTask.notes
+  });
   var breakOne = $('<br>');
   var breakTwo = $('<br>');
   
-  //Append 
+  //Append to container
   container.append(taskForm);
   container.append(title);
   container.append(breakOne);
@@ -35,7 +41,8 @@ function addNewTask(newTask){
   container.append(breakTwo);
   container.append(deleteButton);
 
-  //Inject into DOM
+
+  //Inject container into DOM
   $('#taskcontainer').prepend(container);
   // $('#taskcontainer').prepend(notes); 
   // $('#taskcontainer').prepend(title);
