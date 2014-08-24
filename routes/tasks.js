@@ -26,6 +26,7 @@ router.use('/tasks', function(req, res, next){
 // GET /tasks - LIST works with Jade templates
 router.get('/tasks', function (req, res) {
     
+    //Created a date field and sort by most recent creation 
     Task.find()
       .sort('-created')
       .exec(function (err, tasks){  
@@ -101,7 +102,16 @@ router.put ("/tasks/:id", function (req, res) {
 // DEL /tasks/:id - DESTROY with a redirect
 router.delete ("/tasks/:id", function (req, res) {
   Task.findByIdAndRemove(req.params.id, function (err, task) {
-    res.redirect("/tasks")
+
+    // if err res.send(500)
+    if(err){
+      res.send(500, err);
+    }
+
+    // if ok, res.send(200)
+    res.send(200);
+
+    // res.redirect("/tasks");
   });
 });
 

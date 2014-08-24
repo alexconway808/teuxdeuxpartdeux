@@ -13,12 +13,12 @@ block content
       p
         button(type="submit") Add Task
     h2 Your Tasks
-    ul#taskcontainer
+    ul.taskcontainer
       each task in tasks
         li
           a(href="/tasks/#{task._id}")
             span.title=task.title
             br
             span.notes=task.notes
-          form#deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
-            button#delete(type="submit") delete
+          form.deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
+            button.delete(type="submit") delete

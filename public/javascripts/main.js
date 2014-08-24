@@ -2,7 +2,6 @@ $(document).ready(function(){
 
   $('#form').submit(function(event){
     event.preventDefault();
-    //console.log($('form').serialize());
     $.ajax('/tasks', {
       method: "POST",
       data: $('#form').serialize(),
@@ -15,13 +14,35 @@ $(document).ready(function(){
     });
   });
 
+  //Delete button
+  $('ul.taskcontainer').on('click', '.delete', function(event){
+    $(this).parent().submit();
+  });
+
+  $('ul.taskcontainer').on('submit', '.deleteForm', function(event){
+    alert("Hey");
+    event.preventDefault();
+    var URL = $(this).attr("action");
+    var currentTask = $(this);
+    $.ajax(URL, {
+      method: "POST",
+      success: function (){
+        currentTask.closest('li').remove();
+      },
+      //if it gets a 200, remove element from DOM
+      failure: function(error){
+        console.log(error);
+      }
+    });
+  });
+
 });
+
 
 function addNewTask(newTask){
   //Declare variables for building tasks
   var container = $('<li>');
   var taskForm = $('<form>');
-  var deleteButton = $('<input type="submit>", value="Delete">');
   var title = $('<a>', {
     href: "/tasks/" + newTask._id,
     text: newTask.title
@@ -30,6 +51,14 @@ function addNewTask(newTask){
     href: "/tasks/" + newTask._id,
     text: newTask.notes
   });
+  var deleteButton = $('<button>').html("Delete");
+  var deleteFormSchema = {
+    class: "delete",
+    action: '/tasks/' + newTask._id + '?_method=DELETE',
+    method: "POST",
+    enctype: "application/x-www-form-urlencoded"
+  };
+  var deleteForm = $('<form>', deleteFormSchema);
   var breakOne = $('<br>');
   var breakTwo = $('<br>');
   
@@ -39,12 +68,9 @@ function addNewTask(newTask){
   container.append(breakOne);
   container.append(notes);
   container.append(breakTwo);
-  container.append(deleteButton);
-
+  deleteForm.append(deleteButton);
+  container.append(deleteForm);
 
   //Inject container into DOM
-  $('#taskcontainer').prepend(container);
-  // $('#taskcontainer').prepend(notes); 
-  // $('#taskcontainer').prepend(title);
+  $('.taskcontainer').prepend(container);
 }
-
