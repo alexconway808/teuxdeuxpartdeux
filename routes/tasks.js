@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require ('../mongoose');
+var mongoose = require ('mongoose');
 
 //Create the Task schema
 var Schema = mongoose.Schema;

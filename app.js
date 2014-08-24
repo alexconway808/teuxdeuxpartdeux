@@ -1,5 +1,5 @@
 
-var mongoose = require ('./mongoose');
+var mongoose = require ('mongoose');
 var jade = require ('jade');
 var express = require ('express');
 var app = express();
