@@ -15,12 +15,7 @@ $(document).ready(function(){
   });
 
   //Delete button
-  $('ul.taskcontainer').on('click', '.delete', function(event){
-    $(this).parent().submit();
-  });
-
   $('ul.taskcontainer').on('submit', '.deleteForm', function(event){
-    alert("Hey");
     event.preventDefault();
     var URL = $(this).attr("action");
     var currentTask = $(this);
@@ -51,9 +46,9 @@ function addNewTask(newTask){
     href: "/tasks/" + newTask._id,
     text: newTask.notes
   });
-  var deleteButton = $('<button>').html("Delete");
+  var deleteButton = $("<button class='deleteButton'>").html("Delete");
   var deleteFormSchema = {
-    class: "delete",
+    class: "deleteForm",
     action: '/tasks/' + newTask._id + '?_method=DELETE',
     method: "POST",
     enctype: "application/x-www-form-urlencoded"

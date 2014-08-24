@@ -21,4 +21,4 @@ block content
             br
             span.notes=task.notes
           form.deleteForm(action="/tasks/#{task._id}?_method=DELETE", method="POST", enctype="application/x-www-form-urlencoded")
-            button.delete(type="submit") delete
+            button.deleteButton(type="submit") delete
