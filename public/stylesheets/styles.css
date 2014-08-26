@@ -1,0 +1,39 @@
+/* Notes
+- Registration page (email, username, password) javascript, html, css
+- username field on all loggedin pages
+- change email, username, password
+- Logout button on all loggedin pages
+*/
+
+/* Background for all pages? */
+
+body {
+  background-color: #EDEDED
+}
+
+/* Login page (login.jade) */
+#loginPage {
+  background-color: #EDEDED;
+}
+
+#loginHeader {
+  color: black;
+  text-align: center;
+}
+
+#loginUsername {
+  color: black;
+  text-align: center;
+}
+
+#loginPassword {
+  color: black;
+  text-align: center;
+}
+
+#loginButton {
+  border-color: black;
+  border-style: solid;
+  border-width: 5px;
+}
+
