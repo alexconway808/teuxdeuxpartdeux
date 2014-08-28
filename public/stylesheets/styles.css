@@ -8,27 +8,42 @@
 /* Background for all pages? */
 
 body {
-  background-color: #EDEDED
+  background-image: url("/images/tweed/tweed.png");
 }
 
-/* Login page (login.jade) */
-#loginPage {
-  background-color: #EDEDED;
+#notepad {
+  background: white;
+  width: 800px;
+  height: 1000px;
+  margin-top: 100px;
+  margin-right: 200px;
+  margin-left: 200px;
 }
 
 #loginHeader {
-  color: black;
+  color: #D6D6D6;
   text-align: center;
+  font-family: 'Helvetica Neue';
+  font-size: 24px;
+  border-bottom: #A2928B;
+}
+
+#loginInputs {
+
 }
 
 #loginUsername {
-  color: black;
+  color: #B8B8B8;
   text-align: center;
+  font-family: Helvetica;
+  font-size: 18px;
 }
 
 #loginPassword {
-  color: black;
+  color: #B8B8B8;
   text-align: center;
+  font-family: Helvetica;
+  font-size: 18px;
 }
 
 #loginButton {
@@ -37,3 +52,33 @@ body {
   border-width: 5px;
 }
 
+
+/*Brown top of task list - #A2928B 
+  Border bottom - RGBA(check w3) */
+
+/*Too Doo header text - #D9D9D9 */
+
+/*Enter tasks area - #F9F9F9 
+  Enter text area font color - #B8B8B8 
+  Enter text area arrow - #E0E0E0 */
+
+/*Task list background color - #FCFCFC 
+  Completed task font and line - #B8B8B8 
+  Red X for task list - #BA9C9C 
+  Grey checkmark for task list - #E0DFDF
+  Active task font color - #505050 
+  Lines in between tasks - #D9D9D9
+  */
+
+/*Left hand red lines - #FADEDE */
+
+/*Green checkmark - #FADEDE */
+
+/*Bottom left font color - #F1F1F1
+  Bottom task toolbar background - #EFEFEF
+  Bottom center font color - #978681
+  Clear completed box - #DBDBDB
+  Clear completed text - #999799
+  */
+
+/**/

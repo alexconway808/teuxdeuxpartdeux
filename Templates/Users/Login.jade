@@ -1,17 +1,19 @@
 extends ../Layout
 
 block content
-  div#loginPage
-    H1#loginHeader What do you have TeuxDeux?
-    if errors != ''
-      p.errors
-        =errors
-    form(action="Login", method="POST", enctype="application/x-www-form-urlencoded")
-      p
-        label#loginUsername(for="Username",) Username
-        input#username( value="", type="text", name="username")
-      p
-        label#loginPassword(for="Password") Password
-        input#password( value="", type="password", name="password")
-      
-      button#loginButton(type="submit") Login
+  div#notepad
+    div#loginHeader
+      H1 What do you have TeuxDeux?
+        div#loginInputs
+          if errors != ''
+            p.errors
+              =errors
+          form(action="Login", method="POST", enctype="application/x-www-form-urlencoded")
+            p
+              label#loginUsername(for="Username",) Username
+              input#username( value="", type="text", name="username")
+            p
+              label#loginPassword(for="Password") Password
+              input#password( value="", type="password", name="password")
+            
+            button#loginButton(type="submit") Login
