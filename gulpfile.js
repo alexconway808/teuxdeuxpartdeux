@@ -1,13 +1,14 @@
-var gulp = require('gulp'),
-    minify = require('gulp-minify-css');
+var gulp = require('gulp');
+var minify = require('gulp-minify-css');
+var less = require('gulp-less');
 
-gulp.task('css', function() {
-
-  gulp.src('public/stylesheets/styles.css')
-    .pipe(minify())
-    .pipe(gulp.dest(''));
+gulp.task('less', function() {
+  return gulp.src('./assets/less/styles.less')
+    .pipe(less())
+    .pipe(gulp.dest('./public/stylesheets/'));
 
 });
+
 
 gulp.task('default', ['css']);
 
