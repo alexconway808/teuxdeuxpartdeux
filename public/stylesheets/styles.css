@@ -16,42 +16,53 @@ body {
   font-size: 38px;
 }
 #notepad {
-  background: white;
+  background: #FDFDFD;
   width: 700px;
-  height: 1000px;
+  height: 700px;
   margin-top: 50px;
   margin-right: auto;
   margin-left: auto;
-  padding-top: 20px;
   border-top: 20px solid #A2928B;
   /*need to add gradient*/
-  padding-top: 10px;
+}
+#verticalLines {
+  position: absolute;
+  border-right: 1px solid #FADEDE;
+  border-left: 1px solid #FADEDE;
+  width: 4px;
+  height: 700px;
+  margin-left: 40px;
+}
+form p {
+  border-top: 1px dashed grey;
+  padding-top: 30px;
+  margin-top: 20px;
+}
+form p:last-child {
+  padding: 15px;
+  border-bottom: 1px dashed grey;
+}
+#horizontalLines {
+  position: absolute;
+  line: #BBBBBB;
 }
 p.errors {
   margin: 0px;
   padding: 0px;
 }
 #loginInputs form p {
-  margin-top: 25px;
+  margin-top: 30px;
   margin-bottom: 25px;
 }
-#loginUsername {
-  color: #B8B8B8;
-  text-align: center;
-  font-family: 'Helvetica Neue';
-  font-size: 34px;
-  padding: 20px;
-}
-#username {
-  font-size: 34px;
-}
+#loginUsername,
 #loginPassword {
   color: #B8B8B8;
   text-align: center;
   font-family: 'Helvetica Neue';
   font-size: 34px;
-  padding: 20px;
+  padding: 30px;
 }
+#username,
 #password {
   font-size: 34px;
 }
@@ -60,7 +71,9 @@ p.errors {
   border-style: solid;
   color: #333333;
   width: 200px;
-  height: 75px;
+  height: 60px;
+  margin-bottom: 5px;
+  margin-top: 5px;
   border-width: 5px;
   font-family: 'Helvetica Neue';
   font-size: 34px;
